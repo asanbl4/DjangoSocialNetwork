@@ -37,12 +37,24 @@ class ShowPost(DataMixin, DetailView):
         c_def = self.get_user_context(title=context['post'])
         return dict(list(context.items()) + list(c_def.items()))
 
+
 def about(request):
     return HttpResponse('about')
 
 
-def add_post(request):
-    return HttpResponse('add_post')
+class AddPost(DataMixin, CreateView):
+    form_class = AddPostForm
+    template_name = 'soc_network/add_post.html'
+    login_url = reverse_lazy('home')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Add post')
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def form_valid(self, form):
+        form.request = self.request
+        return super().form_valid(form)
 
 
 class RegisterUser(DataMixin, CreateView):
