@@ -1,0 +1,20 @@
+{% extends 'soc_network/base.html' %}
+
+{% block content %}
+    <h1>{{ title }}</h1>
+    <p>{{ author.name }} {{ author.surname }}</p>
+    {% for p in author.posts.all %}
+        <li>
+            <div class="article-panel">
+                <p class="first">Author: {{ author.name }} {{ author.surname }}</p>
+                <p class="last">Date: {{ p.time_create|date:"d-m-Y H:i:s" }}</p>
+            </div>
+            <h2>{{ p.title }}</h2>
+            {% autoescape on %}
+                {{ p.content|linebreaks|truncatewords:50 }}
+            {% endautoescape %}
+            <div class="clear"></div>
+            <p class="link-read-post"><a href="{{ p.get_absolute_url }}">Read Post</a></p>
+        </li>
+    {% endfor %}
+{% endblock %}

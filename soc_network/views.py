@@ -26,6 +26,18 @@ class Home(DataMixin, ListView):
         return dict(list(context.items()) + list(c_def.items()))
 
 
+class ShowProfile(DataMixin, DetailView):
+    model = Author
+    slug_url_kwarg = 'profile_slug'
+    template_name = 'soc_network/profile.html'
+    context_object_name = 'author'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title=f"Profile")
+        return dict(list(context.items()) + list(c_def.items()))
+
+
 class ShowPost(DataMixin, DetailView):
     model = Post
     slug_url_kwarg = 'post_slug'

@@ -10,4 +10,5 @@ urlpatterns = [
     path('logout/', logout_user, name='logout'),
     path('post/<slug:post_slug>', ShowPost.as_view(), name='post'),
     path('author/<slug:author_slug>', about, name='author'),
+    path('profile/<slug:profile_slug>', ShowProfile.as_view(), name='profile'),
 ]

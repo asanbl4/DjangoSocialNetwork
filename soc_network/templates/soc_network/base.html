@@ -23,7 +23,7 @@
 
               {# reg and logout #}
             {% if request.user.is_authenticated %}
-                <li class="last">{{ user.username }} | <a href="{% url 'logout' %}">Log out</a></li>
+                <li class="last"><a href="{% url 'profile' profile_slug=request.user.username %}">{{ user.username }}</a> | <a href="{% url 'logout' %}">Log out</a></li>
             {% else %}
                 <li class="last"><a href="{% url 'register' %}">Sign up</a> | <a href="{% url 'login' %}">Log in</a></li>
             {% endif %}
