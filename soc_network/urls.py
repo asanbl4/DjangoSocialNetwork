@@ -11,4 +11,6 @@ urlpatterns = [
     path('post/<slug:post_slug>', ShowPost.as_view(), name='post'),
     path('author/<slug:author_slug>', about, name='author'),
     path('profile/<slug:profile_slug>', ShowProfile.as_view(), name='profile'),
+    path('profile/<slug:profile_slug>/friends', ShowFriends.as_view(), name='friends'),
+    # path('add_friends/', about, name='add_friends'),
 ]

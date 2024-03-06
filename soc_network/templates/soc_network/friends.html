@@ -1,0 +1,13 @@
+{% extends 'soc_network/base.html' %}
+
+{% block content %}
+    <h1>{{ title }}</h1>
+    <ul>
+    <h3>Author has {{ author.friends.all.count }} friends</h3>
+    {% for friend in author.friends.all %}
+        <li>
+        <a href="{% url 'profile' profile_slug=friend.slug %}"><p>{{ friend.name }} {{ friend.surname }} - {{ friend.slug }}</p></a>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}

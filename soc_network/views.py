@@ -34,7 +34,19 @@ class ShowProfile(DataMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title=f"Profile")
+        c_def = self.get_user_context(title="Profile")
+        return dict(list(context.items()) + list(c_def.items()))
+
+
+class ShowFriends(DataMixin, DetailView):
+    model = Author
+    slug_url_kwarg = 'profile_slug'
+    template_name = 'soc_network/friends.html'
+    context_object_name = 'author'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title=f"{context['object'].name}'s friends")
         return dict(list(context.items()) + list(c_def.items()))
 
 

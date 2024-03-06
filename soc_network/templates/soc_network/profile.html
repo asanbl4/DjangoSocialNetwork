@@ -3,6 +3,10 @@
 {% block content %}
     <h1>{{ title }}</h1>
     <p>{{ author.name }} {{ author.surname }}</p>
+    {% if request.user.username == author.slug %}
+    <p class="link-read-post"><a href="{% url 'friends' profile_slug=request.user.username%}">My friends</a></p>
+    {% endif %}
+{#    <p class="link-read-post"><a href="{% url 'add_friends' %}">Add friends</a></p>#}
     {% for p in author.posts.all %}
         <li>
             <div class="article-panel">
