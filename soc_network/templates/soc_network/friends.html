@@ -8,6 +8,12 @@
         <li>
         <a href="{% url 'profile' profile_slug=friend.slug %}"><p>{{ friend.name }} {{ friend.surname }} - {{ friend.slug }}</p></a>
         </li>
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="friend_slug" value="{{ friend.slug }}">
+            <button type="submit">Remove Friend</button>
+        </form>
     {% endfor %}
     </ul>
+
 {% endblock %}

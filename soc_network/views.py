@@ -10,9 +10,9 @@ from .utils import DataMixin
 from .models import *
 
 menu = [
-        {'title': "About the website", 'url_name': 'about'},
-        {'title': "Add post", 'url_name': 'add_post'},
-        ]
+    {'title': "About the website", 'url_name': 'about'},
+    {'title': "Add post", 'url_name': 'add_post'},
+]
 
 
 class Home(DataMixin, ListView):
@@ -49,6 +49,12 @@ class ShowFriends(DataMixin, DetailView):
         c_def = self.get_user_context(title=f"{context['object'].name}'s friends")
         return dict(list(context.items()) + list(c_def.items()))
 
+    def post(self, request, *args, **kwargs):
+        friend_slug = request.POST.get('friend_slug')
+        friend = Author.objects.get(slug=friend_slug)
+        request.user.author.friends.remove(friend)
+        return redirect('friends', profile_slug=request.user.username)
+
 
 class ShowPost(DataMixin, DetailView):
     model = Post
@@ -79,6 +85,25 @@ class AddPost(DataMixin, CreateView):
     def form_valid(self, form):
         form.request = self.request
         return super().form_valid(form)
+
+
+class AddFriendView(DataMixin, ListView):
+    model = Author
+    template_name = 'soc_network/add_friends.html'
+
+    def get_queryset(self):
+        return Author.objects.all()
+
+    def post(self, request, *args, **kwargs):
+        friend_slug = request.POST.get('friend_slug')
+        friend = Author.objects.get(slug=friend_slug)
+        request.user.author.friends.add(friend)
+        return redirect('add_friends')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Add_friends')
+        return dict(list(context.items()) + list(c_def.items()))
 
 
 class RegisterUser(DataMixin, CreateView):
@@ -116,7 +141,3 @@ def logout_user(request):
 
 def pageNotFound(request, exception):
     return HttpResponseNotFound(f"<h1>Page not found!</h1>")
-
-
-
-

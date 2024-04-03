@@ -4,8 +4,11 @@
     <h1>{{ title }}</h1>
     <p>{{ author.name }} {{ author.surname }}</p>
     {% if request.user.username == author.slug %}
-    <p class="link-read-post"><a href="{% url 'friends' profile_slug=request.user.username%}">My friends</a></p>
+        <p class="link-read-post"><a href="{% url 'friends' profile_slug=request.user.username%}">My friends</a></p>
+        <p class="link-read-post"><a href="{% url 'add_friends' %}">Add friends</a></p>
     {% endif %}
+    <hr>
+    <h2>{{ author.name }}'s posts</h2>
 {#    <p class="link-read-post"><a href="{% url 'add_friends' %}">Add friends</a></p>#}
     {% for p in author.posts.all %}
         <li>

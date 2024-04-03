@@ -1,0 +1,23 @@
+{% extends 'soc_network/base.html' %}
+
+{% block content %}
+    <h2>{{ title }}</h2>
+
+    <ul>
+        {% for author in object_list %}
+            {% if author != request.user.author %}
+            <li>{{ author.name }} {{ author.surname }}
+                {% if author not in request.user.author.friends.all%}
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="friend_slug" value="{{ author.slug }}">
+                        <button type="submit">Add Friend</button>
+                    </form>
+                {% else %}
+                    <span>| Already friends</span>
+                {% endif %}
+            </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endblock %}

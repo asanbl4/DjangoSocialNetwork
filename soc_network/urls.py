@@ -12,5 +12,5 @@ urlpatterns = [
     path('author/<slug:author_slug>', about, name='author'),
     path('profile/<slug:profile_slug>', ShowProfile.as_view(), name='profile'),
     path('profile/<slug:profile_slug>/friends', ShowFriends.as_view(), name='friends'),
-    # path('add_friends/', about, name='add_friends'),
+    path('add_friends/', AddFriendView.as_view(), name='add_friends'),
 ]
