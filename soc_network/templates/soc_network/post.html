@@ -2,6 +2,15 @@
 
 {% block content %}
     <h1>{{ post.title }}</h1>
+    <hr>
+    <h2>Author: {{ post.author.slug }}</h2>
 
     {{ post.content|linebreaks }}
+    <p>Likes: {{ post.liked_by_authors.count }}</p>
+    {% if request.user.is_authenticated and request.user.username != post.author.slug%}
+        <form id="likeForm" method="post">
+            {% csrf_token %}
+            <button type="submit" name="like_unlike">{% if post not in request.user.author.liked_posts.all %}Like{% else %}Unlike{% endif %}</button>
+        </form>
+    {% endif %}
 {% endblock %}

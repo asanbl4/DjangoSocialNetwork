@@ -1,8 +1,9 @@
 from django.contrib.auth import login, logout
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponse, HttpResponseNotFound
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
+from django.views import View
 from django.views.generic import CreateView, ListView, DetailView
 
 from .forms import *
@@ -66,6 +67,15 @@ class ShowPost(DataMixin, DetailView):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title=context['post'])
         return dict(list(context.items()) + list(c_def.items()))
+
+    def post(self, request, *args, **kwargs):
+        post = self.get_object()
+        if request.user.is_authenticated and 'like_unlike' in request.POST:
+            if request.user.author in post.liked_by_authors.all():
+                post.liked_by_authors.remove(request.user.author)
+            else:
+                post.liked_by_authors.add(request.user.author)
+        return redirect('post', post_slug=post.slug)
 
 
 def about(request):
