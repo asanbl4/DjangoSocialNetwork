@@ -16,6 +16,15 @@ Maybe some day I will complete the beautiful front end of the web app...
 - Can not like own posts/Can not like and create posts when logged out
 
 ## How to run:
+- Clone the project
+```sh
+git clone https://github.com/asanbl4/DjangoSocialNetwork/
+```
+- Navigate to the project directory
+```sh
+cd DjangoSocialNetwork
+```
+- Run the project
 ```sh
 python manage.py runserver
 ```
