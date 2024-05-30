@@ -28,3 +28,7 @@ cd DjangoSocialNetwork
 ```sh
 python manage.py runserver
 ```
+
+## Test the project
+
+Go to localhost:8000, the project runs at port 8000
