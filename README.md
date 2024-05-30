@@ -14,3 +14,8 @@ Maybe some day I will complete the beautiful front end of the web app...
 - Like posts/unlike posts
 - Show profile/a user's personal posts/their friends
 - Can not like own posts/Can not like and create posts when logged out
+
+## How to run:
+```sh
+python manage.py runserver
+```
